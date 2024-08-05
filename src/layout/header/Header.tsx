@@ -1,12 +1,13 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
-    <header className="header">
-      <div className="logo">Tech.Care</div>
+    <header className="flex-row flex justify-between bg-white py-7 px-10 mb-10 rounded-full">
+      <div className="">Tech.Care</div>
       <nav>
-        <ul>
+        <ul className="flex flex-row gap-4">
           <li>
             <Link to="/">Overview</Link>
           </li>
@@ -24,6 +25,11 @@ const Header: React.FC = () => {
           </li>
         </ul>
       </nav>
+      <div> 
+          <Typography>
+            Dr. Jose Simmons
+          </Typography>
+        </div>
     </header>
   );
 };
