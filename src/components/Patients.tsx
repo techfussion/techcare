@@ -1,56 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Typography } from "@mui/material";
-import { fetchPatients } from "../mocks/mockPatients";
+import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
 
-interface Patient {
-  picture: string;
-  gender: string;
-  age: number;
-  name: string;
+interface tansData {
+  data: any;
+  isLoading: boolean;
+  error: any;
 }
 
-const Patients: React.FC<{}> = () => {
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const getPatients = async () => {
-      const data = await fetchPatients();
-      if (isMounted) {
-        setPatients(data);
-        setLoading(false);
-      }
-    };
-
-    getPatients();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (loading) {
+const Patients: React.FC<tansData> = ({ data, isLoading, error }) => {
+  const [activeUser] = useState<string>("Jessica Taylor");
+  if (isLoading) {
     return <Typography>Loading...</Typography>;
   }
 
+  if (error) {
+    return <Typography>Could not load data..</Typography>;
+  }
+
   return (
-    <aside className="bg-white w-full py-5 px-5 rounded-2xl overflow-y-hidden">
-      <Typography variant="h6" className="pb-10">Patients</Typography>
+    <aside
+      className="bg-white w-full py-5 rounded-2xl overflow-y-scroll"
+      style={{ maxHeight: "83vh" }}
+    >
+      <h2 className="pb-5 px-5 text-base font-bold">Patients</h2>
       <ul>
-        {patients.map((patient, index) => (
-          <li key={index} className="flex items-center space-x-4 mb-8">
-            <img src={patient.picture} alt={patient.name} className="w-14 h-14 rounded-full" />
-            <div>
-              <Typography variant="body1">{patient.name}</Typography>
-              <Typography variant="body2">{patient.gender}, {patient.age}</Typography>
+        {data.map((patient: any, index: number) => (
+          <li
+            key={index}
+            className="flex justify-between px-5 py-3"
+            style={
+              activeUser === patient.name ? { backgroundColor: "#D8FCF7" } : {}
+            }
+          >
+            <div className="flex items-center space-x-4">
+              <img
+                src={patient.profile_picture}
+                alt={patient.name}
+                className="w-10 h-10 rounded-full"
+              />
+              <div>
+                <p className="text-xs font-semibold">{patient.name}</p>
+                <p className="text-xs">
+                  {patient.gender}, {patient.age}
+                </p>
+              </div>
             </div>
+            <MoreHorizTwoToneIcon fontSize="small" />
           </li>
         ))}
       </ul>
     </aside>
   );
-}
+};
 
 export default Patients;
