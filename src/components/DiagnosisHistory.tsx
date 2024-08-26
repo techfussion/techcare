@@ -11,7 +11,10 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { ArrowDropDownOutlined, ArrowDropUpOutlined } from "@mui/icons-material";
+import {
+  ArrowDropDownOutlined,
+  ArrowDropUpOutlined,
+} from "@mui/icons-material";
 
 interface tansData {
   data: any;
@@ -33,7 +36,7 @@ const DiagnosisHistory: React.FC<tansData> = ({ data, isLoading, error }) => {
   if (error) {
     return <Typography>Could not load data..</Typography>;
   }
-  console.log(data);
+
   const patientData = data.find((item: any) => item.name === "Jessica Taylor");
 
   const chartData = {
@@ -101,7 +104,7 @@ const DiagnosisHistory: React.FC<tansData> = ({ data, isLoading, error }) => {
                   }
                 </p>
               </div>
-              <hr className="my-3"/>
+              <hr className="my-3" />
               <div>
                 <p className="font-semibold">Diastolic</p>
                 <p className="font-bold text-lg my-1">

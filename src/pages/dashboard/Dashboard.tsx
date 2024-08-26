@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
       <div className="content-section hidden md:block">
         <Header />
         <main>
-          {!isLoading ? (
+          {!isLoading && !error ? (
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={3}>
@@ -59,6 +59,10 @@ const Dashboard: React.FC = () => {
                 </Grid>
               </Grid>
             </Box>
+          ) : error ? (
+            <div className="info-message text-red-700 flex align-center justify-center">
+              <p>Could not load data!!</p>
+            </div>
           ) : (
             <div className="flex align-center justify-center">
               <p>Loading....</p>
